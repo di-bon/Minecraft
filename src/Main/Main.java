@@ -13,7 +13,6 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
 //        map.addSea(3);
 //        while (true) {
 //            MAP.DISPLAY_WITH_NUMBERS();

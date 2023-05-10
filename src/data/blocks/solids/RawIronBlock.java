@@ -5,6 +5,7 @@ import data.blocks.interfaces.SmeltableBlock;
 
 public class RawIronBlock extends AbstractSolidBlock implements SmeltableBlock {
     public RawIronBlock() {
+        super();
         this.blockname = "RawIronBlock";
         this.content = 'R';
     }

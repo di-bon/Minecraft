@@ -1,9 +1,7 @@
-package data;
+package data.blocks.solids;
 
 import data.blocks.*;
 import data.blocks.interfaces.Block;
-import data.blocks.solids.DirtBlock;
-import data.blocks.solids.RawIronBlock;
 import data.blocks.SandBlock;
 
 import java.util.Random;
@@ -24,13 +22,24 @@ public class BlockFactory {
                 return this.sand_block();
             case 2:
                 return this.dirt_block();
+            case 3:
+                return this.torch_block();
             default:
                 return this.null_block();
         }
     }
 
+    public DirtBlock dirt_block(){
+        return new DirtBlock();
+    }
+    public RawIronBlock raw_iron_block(){
+    return new RawIronBlock();
+}
     public AirBlock air_block(){
         return new AirBlock();
+    }
+    public NullBlock null_block(){
+        return new NullBlock();
     }
     public SandBlock sand_block(){
         return new SandBlock();
@@ -38,13 +47,7 @@ public class BlockFactory {
     public WaterBlock water_block(){
         return new WaterBlock();
     }
-    public NullBlock null_block(){
-        return new NullBlock();
-    }
-    public RawIronBlock raw_iron_block(){
-        return new RawIronBlock();
-    }
-    public DirtBlock dirt_block(){
-        return new DirtBlock();
+    public TorchBlock torch_block() {
+        return new TorchBlock();
     }
 }
