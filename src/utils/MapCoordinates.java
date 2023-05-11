@@ -1,6 +1,8 @@
 package utils;
 
 public class MapCoordinates {
+    public static final int DIMENSION_COLUMNS = 10;
+    public static final int DIMENSION_ROWS = 10;
     private final int row;
     private final int column;
 
@@ -15,6 +17,10 @@ public class MapCoordinates {
 
     public int getColumn() {
         return column;
+    }
+
+    public boolean is_in_bound() {
+        return this.getRow() < DIMENSION_ROWS && this.getColumn() < DIMENSION_COLUMNS;
     }
 
     @Override

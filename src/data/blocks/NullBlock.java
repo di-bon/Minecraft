@@ -16,9 +16,4 @@ public class NullBlock extends AbstractSolidBlock implements SmeltableBlock {
     public Block smelt() {
         return new NullBlock();
     }
-
-    public static void main(String[] args) {
-        NullBlock nullBlock = new NullBlock();
-        System.out.println(nullBlock);
-    }
 }

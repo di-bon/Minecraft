@@ -1,75 +1,73 @@
 package UI;
 
+import data.BlockFactory;
 import data.blocks.AirBlock;
+import data.blocks.NullBlock;
 import data.blocks.solids.DirtBlock;
 import data.blocks.solids.TorchBlock;
-import data.exceptions.BlockErrorException;
+import utils.BlockErrorException;
 import data.blocks.solids.RawIronBlock;
 import data.blocks.SandBlock;
 import data.blocks.WaterBlock;
 import data.blocks.interfaces.Block;
-import data.exceptions.WrongCoordinatesException;
+import utils.WrongCoordinatesException;
 import utils.MapCoordinates;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Map {
-    private final int rows;
-    private final int columns;
+    private final int rows = MapCoordinates.DIMENSION_ROWS;
+    private final int columns = MapCoordinates.DIMENSION_COLUMNS;
     private Block[][] map;
 
-    public Map(int rows, int columns) {
-        this.rows = rows;
-        this.columns = columns;
+    public Map(boolean random) {
         this.map = new Block[rows][columns];
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                this.map[i][j] = new AirBlock();
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                MapCoordinates mapCoordinates = new MapCoordinates(row, column);
+                this.insert_at_cords(mapCoordinates, new AirBlock());
+//                this.map[row][column] = new AirBlock();
             }
         }
-    }
-
-    public Map() {
-        this(5, 5);
+        this.addSea(3);
+        if (random) {
+            this.randomize_map();
+        }
     }
 
     public int getRows() {
         return rows;
     }
-
     public int getColumns() {
         return columns;
     }
-
-    public Block getBlockAt(MapCoordinates mapCoordinates) throws WrongCoordinatesException {
+    public Block getBlockAt(MapCoordinates mapCoordinates) {
+        if (!mapCoordinates.is_in_bound()) {
+            return new NullBlock();
+        }
         int row = mapCoordinates.getRow();
         int column = mapCoordinates.getColumn();
 
-        try {
-            return this.map[row][column];
-        }
-        catch (IndexOutOfBoundsException ioobe) {
-            ioobe.printStackTrace();
-            throw new WrongCoordinatesException();
-        }
+        return this.map[row][column];
     }
 
-    public boolean isSmeltableBlock(MapCoordinates mapCoordinates) throws BlockErrorException, WrongCoordinatesException {
+    public boolean isSmeltableBlock(MapCoordinates mapCoordinates) throws BlockErrorException {
         return this.getBlockAt(mapCoordinates).is_smeltable();
     }
 
-    private boolean is_pickable(MapCoordinates mapCoordinates) throws WrongCoordinatesException {
+    private boolean is_pickable(MapCoordinates mapCoordinates) {
         return this.getBlockAt(mapCoordinates).is_pickable();
     }
 
-    public Block gimme_pickable(MapCoordinates mapCoordinates) throws BlockErrorException, WrongCoordinatesException {
+    public Block gimme_pickable(MapCoordinates mapCoordinates) throws BlockErrorException {
         if (this.is_pickable(mapCoordinates)) {
-            return this.getBlockAt(mapCoordinates);
+            Block block = this.getBlockAt(mapCoordinates);
+            this.insert_at_cords(mapCoordinates, new AirBlock());
+            return block;
         }
         throw new BlockErrorException();
-//        return this.is_pickable(mapCoordinates) ? this.getBlockAt(mapCoordinates) : new NullBlock();
-//        return this.getBlockAt(mapCoordinates);
     }
 
     public void display_on_out() {
@@ -161,13 +159,9 @@ public class Map {
 
     // destroy_on_torch return true if any falling block falls on a torch
     private boolean destroy_on_torch(MapCoordinates falling_block) {
-        try {
-            Block lower_block = this.getBlockAt(new MapCoordinates(falling_block.getRow() + 1, falling_block.getColumn()));
-            if (lower_block instanceof TorchBlock) {
-                return true;
-            }
-        } catch (WrongCoordinatesException wce) {
-            wce.printStackTrace();
+        Block lower_block = this.getBlockAt(new MapCoordinates(falling_block.getRow() + 1, falling_block.getColumn()));
+        if (lower_block instanceof TorchBlock) {
+            return true;
         }
         return false;
     }
@@ -188,33 +182,22 @@ public class Map {
         }
     }
 
-    public void randomize_map(int number_of_tries) {
+    public void randomize_map() {
+        int random_blocks_to_add = 10;
+        BlockFactory blockFactory = new BlockFactory();
+
         Random rand = new Random();
-        for (int i = 0 ; i < number_of_tries; i++){
-            Block b = new SandBlock();
-            int rows = rand.nextInt(this.getRows());
-            int columns = rand.nextInt(this.getColumns());
+        for (int i = 0 ; i < random_blocks_to_add; i++){
+            Block b = blockFactory.random_block();
+            int rows = rand.nextInt(MapCoordinates.DIMENSION_ROWS);
+            int columns = rand.nextInt(MapCoordinates.DIMENSION_COLUMNS);
             this.insert_at_cords(new MapCoordinates(rows, columns), b);
-        }
-
-        for (int i = 0; i < number_of_tries; i++) {
-            Block b = new RawIronBlock();
-            int row = rand.nextInt(this.getRows());
-            int col = rand.nextInt(this.getColumns());
-            this.insert_at_cords(new MapCoordinates(row, col), b);
-        }
-
-        for (int i = 0; i < number_of_tries; i++) {
-            Block b = new TorchBlock();
-            int row = rand.nextInt(this.getRows());
-            int col = rand.nextInt(this.getColumns());
-            this.insert_at_cords(new MapCoordinates(row, col), b);
         }
     }
 
     public static void main(String[] args) {
         // Columns of SandBlock
-        Map map = new Map(5, 5);
+        Map map = new Map(true);
         for (int row = 0; row < map.getRows(); row++) {
             map.insert_at_cords(new MapCoordinates(0, 0), new SandBlock());
         }

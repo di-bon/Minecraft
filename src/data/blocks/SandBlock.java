@@ -14,11 +14,6 @@ public class SandBlock extends AbstractBlock implements SmeltableBlock {
         this.pickable = true;
     }
 
-    public static void main(String[] args) {
-        SandBlock sandBlock = new SandBlock();
-        System.out.println(sandBlock);
-    }
-
     @Override
     public Block smelt() {
         return new GlassBlock();

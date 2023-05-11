@@ -1,8 +1,11 @@
-package data.blocks.solids;
+package data;
 
 import data.blocks.*;
 import data.blocks.interfaces.Block;
 import data.blocks.SandBlock;
+import data.blocks.solids.DirtBlock;
+import data.blocks.solids.RawIronBlock;
+import data.blocks.solids.TorchBlock;
 
 import java.util.Random;
 

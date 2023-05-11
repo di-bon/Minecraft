@@ -1,14 +1,11 @@
 package UI;
 
-import data.blocks.solids.BlockFactory;
 import data.blocks.AirBlock;
-import data.blocks.Furnace;
 import data.blocks.NullBlock;
-import data.blocks.solids.IronSwordBlock;
-import data.exceptions.BlockErrorException;
+import utils.BlockErrorException;
 import data.blocks.interfaces.Block;
 import data.blocks.interfaces.SmeltableBlock;
-import data.exceptions.WrongCoordinatesException;
+import utils.WrongCoordinatesException;
 import utils.MapCoordinates;
 
 import java.util.Scanner;
@@ -19,7 +16,7 @@ public class MainView {
     private final Inventory inventory;
 
     public MainView() {
-        map = new Map();
+        map = new Map(true);
         furnace = new Furnace();
         inventory = new Inventory();
     }
@@ -29,62 +26,39 @@ public class MainView {
         furnace.display_on_out();
         inventory.display_inventory();
     }
-
-//    Deprecated
-    public void move_into_furnace(MapCoordinates mapCoordinates) throws WrongCoordinatesException {
+    public void move_into_furnace_from_inventory(int index) {
         try {
-            if (this.map.isSmeltableBlock(mapCoordinates)) {
-                this.furnace.setInput((SmeltableBlock) this.map.getBlockAt(mapCoordinates));
-                this.map.insert_at_cords(mapCoordinates, new AirBlock());
-            }
+            SmeltableBlock smeltableBlock = this.inventory.get_smeltable_item(index);
+            this.furnace.setInput(smeltableBlock);
         } catch (BlockErrorException bee) {
             bee.printStackTrace();
         }
     }
-
-    public void move_into_furnace_from_inventory(int index) {
-        Block block = this.inventory.get_block_from_inventory(index);
-        if (block.is_smeltable() && !(block instanceof NullBlock)) {
-//            if (this.furnace.setInput((SmeltableBlock) block)) {
-//                this.inventory.blocks.remove(index);
-//            }
-            this.furnace.setInput((SmeltableBlock) block);
-            this.inventory.remove_block_from_inventory(index);
-        }
-    }
-
     public void move_into_inventory_from_furnace() {
         Block block = this.furnace.get_input();
         if (block instanceof NullBlock) {
             return;
         }
         this.inventory.add_block(block);
-        this.furnace.empty_input();
     }
 
-    public void pick_up_block(MapCoordinates mapCoordinates) throws BlockErrorException, WrongCoordinatesException {
-//        Block block = this.map.getBlockAt(mapCoordinates);
-//        if (block.is_pickable()) {
-//            this.inventory.add_block(block);
-//            this.map.insert_at_cords(mapCoordinates, new AirBlock());
-//        }
-        this.inventory.add_block(this.map.gimme_pickable(mapCoordinates));
-        this.map.insert_at_cords(mapCoordinates, new AirBlock());
-        this.map.process_gravity(mapCoordinates);
+    public void pick_up_block(MapCoordinates mapCoordinates) {
+        try {
+            Block block = this.map.gimme_pickable(mapCoordinates);
+            this.inventory.add_block(block);
+        } catch (BlockErrorException bee) {
+            bee.printStackTrace();
+        }
     }
 
     public void toggle_inventory_comparator() {
-        this.inventory.change_comparator();
+        this.inventory.toggle_comparator();
     }
 
     public static void main(String[] args) {
         MainView mainView = new MainView();
-        mainView.map.randomize_map(10);
+        mainView.map.randomize_map();
         mainView.display_on_out();
-
-//        BlockFactory bf = new BlockFactory();
-//        bf.ironSwordBlock();
-//        IronSwordBlock ironSwordBlock = new IronSwordBlock();
 
         while (true) {
             System.out.println("Enter row and then column to pick that block");
@@ -112,14 +86,7 @@ public class MainView {
                 }
             } else{
                 MapCoordinates c = new MapCoordinates(row,col);
-                try {
-                    mainView.pick_up_block(c);
-                }
-                catch (BlockErrorException bee) {
-                    bee.printStackTrace();
-                } catch (WrongCoordinatesException wce) {
-                    wce.printStackTrace();
-                }
+                mainView.pick_up_block(c);
             }
             mainView.display_on_out();
         }
