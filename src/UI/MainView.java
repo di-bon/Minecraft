@@ -1,12 +1,11 @@
 package UI;
 
-import data.blocks.AirBlock;
 import data.blocks.NullBlock;
 import utils.BlockErrorException;
 import data.blocks.interfaces.Block;
 import data.blocks.interfaces.SmeltableBlock;
-import utils.WrongCoordinatesException;
 import utils.MapCoordinates;
+import utils.WrongCoordinatesException;
 
 import java.util.Scanner;
 
@@ -48,6 +47,8 @@ public class MainView {
             this.inventory.add_block(block);
         } catch (BlockErrorException bee) {
             bee.printStackTrace();
+        } catch (WrongCoordinatesException wce) {
+            wce.printStackTrace();
         }
     }
 
@@ -57,7 +58,7 @@ public class MainView {
 
     public static void main(String[] args) {
         MainView mainView = new MainView();
-        mainView.map.randomize_map();
+        mainView.map.randomise_map();
         mainView.display_on_out();
 
         while (true) {

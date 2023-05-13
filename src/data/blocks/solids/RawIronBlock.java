@@ -12,6 +12,6 @@ public class RawIronBlock extends AbstractSolidBlock implements SmeltableBlock {
 
     @Override
     public Block smelt() {
-        return new IronSwordBlockBlock();
+        return new IronSwordBlock();
     }
 }

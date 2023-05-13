@@ -15,6 +15,10 @@ public abstract class AbstractBlock implements Block {
     }
 
     @Override
+    public String get_blockname() {
+        return this.blockname;
+    }
+    @Override
     public char display() {
         return this.content;
     }

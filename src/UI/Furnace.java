@@ -6,12 +6,20 @@ import data.blocks.interfaces.Block;
 import data.blocks.interfaces.SmeltableBlock;
 
 public class Furnace {
-    SmeltableBlock input;
-    Block output;
+    private SmeltableBlock input;
+    private Block output;
 
     public Furnace() {
         this.reset_furnace();
     }
+
+//    public SmeltableBlock view_input_block() {
+//        return this.input;
+//    }
+//
+//    public Block view_output_block() {
+//        return this.output;
+//    }
 
     public void display_on_out() {
         System.out.println("||" + this.input.display() + " --> " + this.output.display() + "||");

@@ -3,6 +3,7 @@ package Main;
 import data.blocks.AirBlock;
 import UI.Map;
 import utils.MapCoordinates;
+import utils.WrongCoordinatesException;
 
 import java.util.Scanner;
 
@@ -27,6 +28,10 @@ public class Main {
         System.out.print("Enter column: ");
         int col = scanner.nextInt();
 
-        map.insert_at_cords(new MapCoordinates(row, col), new AirBlock());
+        try {
+            map.insert_at_cords(new MapCoordinates(row, col), new AirBlock());
+        } catch (WrongCoordinatesException wce) {
+            wce.printStackTrace();
+        }
     }
 }

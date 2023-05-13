@@ -2,8 +2,8 @@ package data.blocks.solids;
 
 import data.blocks.interfaces.IronSwordInterfaceBlock;
 
-public class IronSwordBlockBlock extends AbstractSolidBlock implements IronSwordInterfaceBlock {
-    IronSwordBlockBlock() {
+public class IronSwordBlock extends AbstractSolidBlock implements IronSwordInterfaceBlock {
+    IronSwordBlock() {
         super();
         this.blockname = "IronSwordBlock";
         this.content = 'I';

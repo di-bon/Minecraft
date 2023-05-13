@@ -56,26 +56,21 @@ public class Inventory {
         }
         return false;
     }
-    public Block get_block_from_inventory(int index)throws IndexOutOfBoundsException {
-        if (this.has_index(index)) {
-            return this.blocks.remove(index);
-        }
-        else {
-            throw new IndexOutOfBoundsException();
-        }
+    public Block get_block_from_inventory(int index) throws IndexOutOfBoundsException {
+        return this.blocks.remove(index);
+//        if (this.has_index(index)) {
+//            return this.blocks.remove(index);
+//        }
+//        else {
+//            throw new IndexOutOfBoundsException();
+//        }
     }
     private boolean has_index(int index) {
         return index < this.blocks.size();
     }
 
-    public boolean remove_block_from_inventory(int index) {
-        try {
-            this.blocks.remove(index);
-            return true;
-        } catch (IndexOutOfBoundsException iooe) {
-            iooe.printStackTrace();
-            return false;
-        }
+    public void remove_block_from_inventory(int index) throws IndexOutOfBoundsException {
+        this.blocks.remove(index);
     }
     private boolean is_smeltable(int index) throws IndexOutOfBoundsException {
         return this.blocks.get(index).is_smeltable();
@@ -96,5 +91,17 @@ public class Inventory {
         else {
             this.comparator = new AlphabeticalBlockComparator();
         }
+    }
+
+
+    public List<Block> get_up_to_first_9_block() {
+        List<Block> blockList = new ArrayList<>();
+        Iterator<Block> iterator = this.blocks.iterator();
+        int counter = 0;
+        while (iterator.hasNext() && counter < 9) {
+            blockList.add(iterator.next());
+            counter++;
+        }
+        return blockList;
     }
 }
