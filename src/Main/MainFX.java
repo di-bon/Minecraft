@@ -1,15 +1,25 @@
 package Main;
 
-import UI.BlockPane;
-import UI.MainGUI;
+import UI.*;
+import UI.controllers.FurnaceSimpleController;
+import UI.controllers.InventorySimpleController;
+import UI.controllers.MainSimpleController;
+import UI.controllers.MapSimpleController;
+import data.BlockFactory;
 import data.blocks.NullBlock;
 import data.blocks.SandBlock;
 import data.blocks.interfaces.Block;
 import data.blocks.solids.*;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import utils.MapCoordinates;
+import utils.WrongCoordinatesException;
+
+import java.util.Random;
 
 public class MainFX extends Application {
     int index = 0;
@@ -59,12 +69,66 @@ public class MainFX extends Application {
 //        ButtonListPane buttonListPane = new ButtonListPane();
 //        root.getChildren().add(buttonListPane);
 
-        MainGUI mainGUI = new MainGUI();
-        root.getChildren().add(mainGUI);
+//        MainGUI mainGUI = new MainGUI();
+//        root.getChildren().add(mainGUI);
+
+        // FurnaceSimpleController test
+//        Furnace furnace = new Furnace();
+//        FurnacePane furnacePane = new FurnacePane();
+//        FurnaceSimpleController furnaceSimpleController = new FurnaceSimpleController(furnace, furnacePane);
+//
+//        Button button = new Button("Redraw");
+//        button.addEventHandler(ActionEvent.ANY, (ActionEvent event) -> {
+//            furnace.setInput(new SandBlock());
+//            furnaceSimpleController.redraw();
+//        });
+//        VBox vBox = new VBox(2);
+//        vBox.getChildren().addAll(furnacePane, button);
+//        root.getChildren().add(vBox);
+
+        // InventorySimpleController test
+//        Inventory inventory = new Inventory();
+//        InventoryPane inventoryPane = new InventoryPane();
+//        InventorySimpleController inventorySimpleController = new InventorySimpleController(inventory, inventoryPane);
+//        Button button = new Button("Redraw");
+//        button.addEventHandler(ActionEvent.ANY, (ActionEvent event) -> {
+//            inventory.add_block(new DirtBlock());
+//            inventorySimpleController.redraw();
+//        });
+//        VBox vBox = new VBox(2);
+//        vBox.getChildren().addAll(inventoryPane, button);
+//        root.getChildren().add(vBox);
+
+        // MapSimpleController test
+//        Map map = new Map(false);
+//        MapPane mapPane = new MapPane();
+//        MapSimpleController mapSimpleController = new MapSimpleController(map, mapPane);
+//        Button button = new Button("Redraw");
+//        button.addEventHandler(ActionEvent.ANY, (ActionEvent event) -> {
+//            try {
+//                Random random = new Random();
+//                int row = random.nextInt(MapCoordinates.DIMENSION_ROWS);
+//                int column = random.nextInt(MapCoordinates.DIMENSION_COLUMNS);
+//                BlockFactory blockFactory = new BlockFactory();
+//                Block random_block = blockFactory.random_block();
+//                MapCoordinates mapCoordinates = new MapCoordinates(row, column);
+//                System.out.println("Inserting " + random_block.get_blockname() + " at " + mapCoordinates);
+//                map.insert_at_cords(mapCoordinates, random_block);
+//                mapSimpleController.redraw();
+//            } catch (WrongCoordinatesException wce) {
+//                wce.printStackTrace();
+//            }
+//        });
+//        VBox vBox = new VBox(2);
+//        vBox.getChildren().addAll(mapPane, button);
+//        root.getChildren().add(vBox);
 
 //        BlockPane blockPane = mapPane.get_block_at_coords(new MapCoordinates(8, 2));
 //        blockPane.change_block(new DirtBlock());
 
+        MainSimpleController mainSimpleController = new MainSimpleController(new MainView(true));
+        MainGUI mainGUI = mainSimpleController.get_main_gui();
+        root.getChildren().add(mainGUI);
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setTitle("Minecraft");
         primaryStage.setScene(scene);

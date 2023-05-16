@@ -1,5 +1,6 @@
 package UI;
 
+import UI.controllers.MainSimpleController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,21 +12,32 @@ public class MainGUI extends BorderPane {
     private MapPane mapPane;
     private ButtonListPane buttonListPane;
     private FurnacePane furnacePane;
-
     private InventoryPane inventoryPane;
+    private MainSimpleController mainSimpleController;
 
-    public MainGUI() {
+    public MainGUI(MainSimpleController mainSimpleController) {
         super();
-        this.initialise();
+        this.initialise(mainSimpleController);
     }
 
-    private void initialise() {
+    public MapPane get_map_pane() {
+        return mapPane;
+    }
+
+    public FurnacePane get_furnace_pane() {
+        return furnacePane;
+    }
+
+    public InventoryPane get_inventory_pane() {
+        return inventoryPane;
+    }
+
+    private void initialise(MainSimpleController mainSimpleController) {
+        this.mainSimpleController = mainSimpleController;
         this.mapPane = new MapPane();
-        this.mapPane.randomise_map();
         this.furnacePane = new FurnacePane();
         this.inventoryPane = new InventoryPane();
-        this.buttonListPane = new ButtonListPane(this.mapPane, this.inventoryPane, this.furnacePane);
-
+        this.buttonListPane = new ButtonListPane(this.mainSimpleController);
 
         this.buttonListPane.setPrefWidth(150);
         this.setLeft(this.buttonListPane);

@@ -14,7 +14,7 @@ public class FurnacePane extends VBox {
     private BlockPane input;
     private BlockPane output;
     private Text title;
-    private Text arrow;
+    private Text arrow = new Text("-->");
     private HBox hBox;
     public FurnacePane() {
         super();
@@ -23,7 +23,6 @@ public class FurnacePane extends VBox {
 
     private void initialise() {
         this.furnace = new Furnace();
-//        this.set_input_block(new NullBlock());
 
         this.setAlignment(Pos.CENTER);
         this.title = new Text("Furnace");
@@ -31,18 +30,22 @@ public class FurnacePane extends VBox {
         this.hBox = new HBox(3);
         this.hBox.setAlignment(Pos.CENTER);
 
-//        this.input = new BlockPane(this.furnace.view_input_block());
-        this.input = new BlockPane(new SandBlock());
-        this.arrow = new Text("-->");
-        this.output = new BlockPane(new GlassBlock());
-//        this.output = new BlockPane(this.furnace.view_output_block());
+        this.input = new BlockPane(new NullBlock());
+        this.output = new BlockPane(new NullBlock());
 
         this.getChildren().add(this.title);
-        this.hBox.getChildren().addAll(this.input, this.arrow, this.output);
+        this.populate_hbox();
         this.getChildren().add(this.hBox);
     }
 
-//    public void set_input_block(SmeltableBlock smeltableBlock) {
-//        this.furnace.setInput(smeltableBlock);
-//    }
+    public void set_io(BlockPane input, BlockPane output) {
+        this.hBox.getChildren().clear();
+        this.input = input;
+        this.output = output;
+        this.populate_hbox();
+    }
+
+    private void populate_hbox() {
+        this.hBox.getChildren().addAll(this.input, this.arrow, this.output);
+    }
 }

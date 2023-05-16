@@ -110,19 +110,19 @@ public class MapPane extends GridPane {
 //        return block;
 //    }
 
-    public void randomise_map() {
-        this.map.randomise_map();
-
-        for (int row = 0; row < this.NUMBER_OF_ROWS; row++) {
-            for (int column = 0; column < this.NUMBER_OF_COLUMNS; column++) {
-                MapCoordinates map_coords = new MapCoordinates(row, column);
-                Block block = map.getBlockAt(map_coords);
-                try {
-                    this.set_cell(map_coords, new BlockPane(block));
-                } catch (WrongCoordinatesException wce) {
-                    wce.printStackTrace();
-                }
-            }
-        }
-    }
+//    public void randomise_map() {
+//        this.map.randomise_map();
+//
+//        for (int row = 0; row < this.NUMBER_OF_ROWS; row++) {
+//            for (int column = 0; column < this.NUMBER_OF_COLUMNS; column++) {
+//                MapCoordinates map_coords = new MapCoordinates(row, column);
+//                Block block = map.getBlockAt(map_coords);
+//                try {
+//                    this.set_cell(map_coords, new BlockPane(block));
+//                } catch (WrongCoordinatesException wce) {
+//                    wce.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 }

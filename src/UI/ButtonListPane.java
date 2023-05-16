@@ -1,5 +1,6 @@
 package UI;
 
+import UI.controllers.MainSimpleController;
 import data.blocks.interfaces.Block;
 import data.blocks.interfaces.SmeltableBlock;
 import javafx.event.ActionEvent;
@@ -13,13 +14,14 @@ import utils.MapCoordinates;
 import utils.WrongCoordinatesException;
 
 public class ButtonListPane extends VBox {
-
-    public ButtonListPane(MapPane mapPane, InventoryPane inventoryPane, FurnacePane furnacePane) {
+    private MainSimpleController mainSimpleController;
+    public ButtonListPane(MainSimpleController mainSimpleController) {
         super();
-        this.initialise(mapPane, inventoryPane, furnacePane);
+        this.initialise(mainSimpleController);
     }
 
-    private void initialise(MapPane mapPane, InventoryPane inventoryPane, FurnacePane furnacePane) {
+    private void initialise(MainSimpleController mainSimpleController) {
+        this.mainSimpleController = mainSimpleController;
         this.setAlignment(Pos.CENTER);
 
         TextField coords_row = new TextField();
@@ -29,24 +31,20 @@ public class ButtonListPane extends VBox {
         Button pick = new Button("Pick");
         pick.setPrefWidth(50);
         pick.addEventHandler(ActionEvent.ANY, (ActionEvent event) -> {
-//            try {
-//                int row = Integer.parseInt(coords_row.getText());
-//                int column = Integer.parseInt(coords_column.getText());
-//
-//                MapCoordinates mapCoordinates = new MapCoordinates(row, column);
-//                Block picked_block = mapPane.pick_block_at(mapCoordinates);
-//                inventoryPane.add_block(picked_block);
-//
-//                coords_row.setText("");
-//                coords_column.setText("");
-//            } catch (NumberFormatException nfe) {
-//                nfe.printStackTrace();
-//            } catch (WrongCoordinatesException wce) {
-//                wce.printStackTrace();
-//            } catch (BlockErrorException bee) {
-//                System.out.println("Block is not pickable");
-//                bee.printStackTrace();
-//            }
+            // pick up block
+            try {
+                int row = Integer.parseInt(coords_row.getText());
+                int column = Integer.parseInt((coords_column.getText()));
+                MapCoordinates mapCoordinates = new MapCoordinates(row, column);
+                System.out.println("Picking up block at " + mapCoordinates);
+                this.mainSimpleController.pick_up_block(mapCoordinates);
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+            } catch (BlockErrorException bee) {
+                bee.printStackTrace();
+            } catch (WrongCoordinatesException wce) {
+                wce.printStackTrace();
+            }
         });
         HBox pick_hbox = new HBox(3);
         pick_hbox.getChildren().addAll(coords_row, coords_column, pick);
@@ -57,17 +55,14 @@ public class ButtonListPane extends VBox {
         move_to_furnace.setPrefWidth(100);
         move_to_furnace.addEventHandler(ActionEvent.ANY, (ActionEvent event) -> {
             // move item to furnace
-//            try {
-//                int index = Integer.parseInt(inventory_index.getText());
-//
-//                Block block = inventoryPane.get_block_at(index);
-//                if (block.is_smeltable()) {
-//                    furnacePane.set_input_block((SmeltableBlock) block);
-//                    inventoryPane.remove_block_from_inventory(index);
-//                }
-//            } catch (NumberFormatException nfe) {
-//                nfe.printStackTrace();
-//            }
+            try {
+                int index = Integer.parseInt(inventory_index.getText());
+                this.mainSimpleController.move_into_furnace_from_inventory(index);
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+            } catch (BlockErrorException bee) {
+                bee.printStackTrace();
+            }
         });
         HBox move_to_furnace_hbox = new HBox(2);
         move_to_furnace_hbox.getChildren().addAll(inventory_index, move_to_furnace);
@@ -76,6 +71,7 @@ public class ButtonListPane extends VBox {
         smelt.setPrefWidth(150);
         smelt.addEventHandler(ActionEvent.ANY, (ActionEvent event) -> {
             // smelt item inside furnace
+            this.mainSimpleController.smelt();
         });
         HBox smelt_hbox = new HBox(1);
         smelt_hbox.getChildren().add(smelt);
@@ -84,6 +80,7 @@ public class ButtonListPane extends VBox {
         move_back.setPrefWidth(150);
         move_back.addEventHandler(ActionEvent.ANY, (ActionEvent event) -> {
             // move furnace input item into inventory
+            this.mainSimpleController.move_into_inventory_from_furnace();
         });
         HBox move_back_hbox = new HBox(1);
         move_back_hbox.getChildren().add(move_back);
@@ -92,6 +89,7 @@ public class ButtonListPane extends VBox {
         toggle_inventory_sorting.setPrefWidth(150);
         toggle_inventory_sorting.addEventHandler(ActionEvent.ANY, (ActionEvent event) -> {
             // toggle inventory sorting
+            this.mainSimpleController.toggle_inventory_comparator();
         });
         HBox toggle_inventory_sorting_hbox = new HBox(1);
         toggle_inventory_sorting_hbox.getChildren().add(toggle_inventory_sorting);

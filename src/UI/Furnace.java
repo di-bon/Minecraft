@@ -13,13 +13,13 @@ public class Furnace {
         this.reset_furnace();
     }
 
-//    public SmeltableBlock view_input_block() {
-//        return this.input;
-//    }
-//
-//    public Block view_output_block() {
-//        return this.output;
-//    }
+    public SmeltableBlock view_input_block() {
+        return this.input;
+    }
+
+    public Block view_output_block() {
+        return this.output;
+    }
 
     public void display_on_out() {
         System.out.println("||" + this.input.display() + " --> " + this.output.display() + "||");

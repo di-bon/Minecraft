@@ -67,8 +67,9 @@ public class Map {
             Block block = this.getBlockAt(mapCoordinates);
             this.insert_at_cords(mapCoordinates, new AirBlock());
             return block;
+        } else {
+            throw new BlockErrorException();
         }
-        throw new BlockErrorException();
     }
 
     public void display_on_out() {

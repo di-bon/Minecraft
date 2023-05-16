@@ -1,5 +1,6 @@
 package UI;
 
+import data.BlockFactory;
 import data.blocks.utils.AlphabeticalBlockComparator;
 import data.blocks.utils.BlockComparator;
 import utils.BlockErrorException;
@@ -30,6 +31,10 @@ public class Inventory {
         this.inventory_size = 10;
         this.blocks = new ArrayList<>();
         this.comparator = new AlphabeticalBlockComparator();
+    }
+
+    public Iterator<Block> get_blocks_iterator() {
+        return this.blocks.iterator();
     }
 
     public void display_inventory() {
@@ -91,17 +96,5 @@ public class Inventory {
         else {
             this.comparator = new AlphabeticalBlockComparator();
         }
-    }
-
-
-    public List<Block> get_up_to_first_9_block() {
-        List<Block> blockList = new ArrayList<>();
-        Iterator<Block> iterator = this.blocks.iterator();
-        int counter = 0;
-        while (iterator.hasNext() && counter < 9) {
-            blockList.add(iterator.next());
-            counter++;
-        }
-        return blockList;
     }
 }

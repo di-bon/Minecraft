@@ -14,10 +14,22 @@ public class MainView {
     private final Furnace furnace;
     private final Inventory inventory;
 
-    public MainView() {
-        map = new Map(true);
+    public MainView(boolean random) {
+        map = new Map(random);
         furnace = new Furnace();
         inventory = new Inventory();
+    }
+
+    public Map get_map() {
+        return this.map;
+    }
+
+    public Furnace get_furnace() {
+        return furnace;
+    }
+
+    public Inventory get_inventory() {
+        return inventory;
     }
 
     public void display_on_out() {
@@ -25,12 +37,16 @@ public class MainView {
         furnace.display_on_out();
         inventory.display_inventory();
     }
-    public void move_into_furnace_from_inventory(int index) {
-        try {
-            SmeltableBlock smeltableBlock = this.inventory.get_smeltable_item(index);
-            this.furnace.setInput(smeltableBlock);
-        } catch (BlockErrorException bee) {
-            bee.printStackTrace();
+    public void move_into_furnace_from_inventory(int index) throws BlockErrorException {
+        SmeltableBlock smeltableBlock = this.inventory.get_smeltable_item(index);
+        this.furnace.setInput(smeltableBlock);
+        this.inventory.remove_block_from_inventory(index);
+    }
+
+    public void smelt() {
+        Block smelted_block = this.furnace.smelt();
+        if (!smelted_block.is_null_block()) {
+            this.inventory.add_block(smelted_block);
         }
     }
     public void move_into_inventory_from_furnace() {
@@ -41,15 +57,9 @@ public class MainView {
         this.inventory.add_block(block);
     }
 
-    public void pick_up_block(MapCoordinates mapCoordinates) {
-        try {
-            Block block = this.map.gimme_pickable(mapCoordinates);
-            this.inventory.add_block(block);
-        } catch (BlockErrorException bee) {
-            bee.printStackTrace();
-        } catch (WrongCoordinatesException wce) {
-            wce.printStackTrace();
-        }
+    public void pick_up_block(MapCoordinates mapCoordinates) throws BlockErrorException, WrongCoordinatesException {
+        Block block = this.map.gimme_pickable(mapCoordinates);
+        this.inventory.add_block(block);
     }
 
     public void toggle_inventory_comparator() {
@@ -57,7 +67,7 @@ public class MainView {
     }
 
     public static void main(String[] args) {
-        MainView mainView = new MainView();
+        MainView mainView = new MainView(true);
         mainView.map.randomise_map();
         mainView.display_on_out();
 
@@ -71,7 +81,11 @@ public class MainView {
             int row = myObj.nextInt();
             int col = myObj.nextInt();
             if (row == 9){
-                mainView.move_into_furnace_from_inventory(col);
+                try {
+                    mainView.move_into_furnace_from_inventory(col);
+                } catch (BlockErrorException bee) {
+                    bee.printStackTrace();
+                }
             }else if( row == 99 ){
                 if (col == 9) {
                     Block smelted_block = mainView.furnace.smelt();
@@ -87,7 +101,13 @@ public class MainView {
                 }
             } else{
                 MapCoordinates c = new MapCoordinates(row,col);
-                mainView.pick_up_block(c);
+                try {
+                    mainView.pick_up_block(c);
+                } catch (BlockErrorException bee) {
+                    bee.printStackTrace();
+                } catch (WrongCoordinatesException wce) {
+                    wce.printStackTrace();
+                }
             }
             mainView.display_on_out();
         }
