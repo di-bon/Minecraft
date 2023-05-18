@@ -1,11 +1,7 @@
 package UI;
 
-import UI.controllers.MainSimpleController;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
+import UI.SimpleControllers.MainSimpleController;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import utils.MapCoordinates;
 
 public class MainGUI extends BorderPane {

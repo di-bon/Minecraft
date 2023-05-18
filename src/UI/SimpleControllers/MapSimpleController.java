@@ -1,13 +1,9 @@
-package UI.controllers;
+package UI.SimpleControllers;
 
-import Main.Main;
 import UI.*;
 import data.blocks.interfaces.Block;
 import utils.MapCoordinates;
 import utils.WrongCoordinatesException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MapSimpleController implements SimpleController {
     private Map map;

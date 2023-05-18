@@ -1,8 +1,6 @@
 package UI;
 
-import UI.controllers.MainSimpleController;
-import data.blocks.interfaces.Block;
-import data.blocks.interfaces.SmeltableBlock;
+import UI.SimpleControllers.MainSimpleController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

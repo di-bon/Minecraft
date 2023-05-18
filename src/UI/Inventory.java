@@ -33,23 +33,31 @@ public class Inventory {
         this.comparator = new AlphabeticalBlockComparator();
     }
 
+    public List<Block> get_blocks() {
+        return this.blocks;
+    }
+
     public Iterator<Block> get_blocks_iterator() {
         return this.blocks.iterator();
     }
 
-    public void display_inventory() {
-        Iterator<Block> iterator = this.blocks.iterator();
-        while(iterator.hasNext()) {
-            iterator.next().display_in_inventory();
-            System.out.print(" ");
-        }
-        System.out.println();
-
-//        "Usate un Iterator per ciclare sulla collection"
-//        for(Block block : this.blocks) {
-//            block.display_in_inventory();
-//        }
+    public Comparator<Block> get_comparator() {
+        return this.comparator;
     }
+
+//    public void display_inventory() {
+//        Iterator<Block> iterator = this.blocks.iterator();
+//        while(iterator.hasNext()) {
+//            iterator.next().display_in_inventory();
+//            System.out.print(" ");
+//        }
+//        System.out.println();
+//
+////        "Usate un Iterator per ciclare sulla collection"
+////        for(Block block : this.blocks) {
+////            block.display_in_inventory();
+////        }
+//    }
     public boolean add_block(Block block) {
         if (block.is_null_block()) {
             return false;

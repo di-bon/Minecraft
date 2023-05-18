@@ -1,4 +1,4 @@
-package UI.controllers;
+package UI.SimpleControllers;
 
 import UI.Inventory;
 import UI.InventoryPane;

@@ -21,9 +21,9 @@ public class Furnace {
         return this.output;
     }
 
-    public void display_on_out() {
-        System.out.println("||" + this.input.display() + " --> " + this.output.display() + "||");
-    }
+//    public void display_on_out() {
+//        System.out.println("||" + this.input.display() + " --> " + this.output.display() + "||");
+//    }
     private void reset_furnace(){
         this.input = new NullBlock();
         this.output = new NullBlock();

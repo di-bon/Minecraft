@@ -1,15 +1,12 @@
-package UI.controllers;
+package UI.SimpleControllers;
 
 import UI.MainGUI;
 import UI.MainView;
-import data.blocks.interfaces.Block;
 import utils.BlockErrorException;
 import utils.MapCoordinates;
 import utils.WrongCoordinatesException;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class MainSimpleController implements SimpleController {

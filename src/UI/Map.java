@@ -44,6 +44,11 @@ public class Map {
     public int getColumns() {
         return columns;
     }
+
+    public Block[][] getMap() {
+        return map;
+    }
+
     public Block getBlockAt(MapCoordinates mapCoordinates) {
         if (!mapCoordinates.is_in_bound()) {
             return new NullBlock();
@@ -72,28 +77,18 @@ public class Map {
         }
     }
 
-    public void display_on_out() {
-        System.out.println("\n");
+//    public void display_on_out() {
+//        System.out.println("\n");
+//
+//        for (int row = 0; row < this.getRows(); row++) {
+//            for (int column = 0; column < this.getColumns(); column++) {
+//                System.out.print(map[row][column].display() + " ");
+//            }
+//            System.out.print("\n");
+//        }
+//    }
 
-        for (int row = 0; row < this.getRows(); row++) {
-            for (int column = 0; column < this.getColumns(); column++) {
-                System.out.print(map[row][column].display() + " ");
-            }
-            System.out.print("\n");
-        }
-    }
-
-    public void display_with_numbers() {
-
-        for (int row = 0; row < this.getRows(); row++) {
-            System.out.print(row + "  ");
-            for (int column = 0; column < this.getColumns(); column++) {
-                System.out.print(map[row][column].display() + "  ");
-            }
-            System.out.print("\n");
-        }
-    }
-
+    // TODO: update process_gravity logic
     public void process_gravity(MapCoordinates coords_start) throws WrongCoordinatesException {
         int currentRow = coords_start.getRow();
 
@@ -138,6 +133,7 @@ public class Map {
         }
     }
 
+    // TODO: update proscess_gravity_block logic
     private void process_block_gravity(MapCoordinates mapCoordinates) throws WrongCoordinatesException {
         int row = mapCoordinates.getRow();
         int column = mapCoordinates.getColumn();
@@ -211,47 +207,47 @@ public class Map {
 
     public static void main(String[] args) {
         // Columns of SandBlock
-        Map map = new Map(true);
-        for (int row = 0; row < map.getRows(); row++) {
-            try {
-                map.insert_at_cords(new MapCoordinates(0, 0), new SandBlock());
-            } catch (WrongCoordinatesException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        // SandBlock on top of DirtBlock
-        try {
-            map.insert_at_cords(new MapCoordinates(3, 2), new DirtBlock());
-            map.insert_at_cords(new MapCoordinates(2, 2), new SandBlock());
-            map.insert_at_cords(new MapCoordinates(1, 2), new SandBlock());
-
-            // SandBlock falling on a TorchBlock
-            map.insert_at_cords(new MapCoordinates(4, 4), new TorchBlock());
-            map.insert_at_cords(new MapCoordinates(0, 4), new SandBlock());
-
-            map.display_with_numbers();
-
-            // Test 1
-            MapCoordinates coords_of_removed_sand_block = new MapCoordinates(map.getRows()-1, 0);
-            map.insert_at_cords(coords_of_removed_sand_block, new AirBlock());
-            map.process_gravity(coords_of_removed_sand_block);
-
-            // Test 2
-            MapCoordinates coords_of_removed_dirt_block = new MapCoordinates(3, 2);
-            map.insert_at_cords(coords_of_removed_dirt_block, new AirBlock());
-            map.process_gravity(coords_of_removed_dirt_block);
-
-            // Test 3
-            MapCoordinates coords_of_torch_block = new MapCoordinates(4, 4);
-            map.process_gravity(coords_of_torch_block);
-
-        } catch (WrongCoordinatesException e) {
-            throw new RuntimeException(e);
-        }
-
-        System.out.println("\n\n\n");
-
-        map.display_with_numbers();
+//        Map map = new Map(true);
+//        for (int row = 0; row < map.getRows(); row++) {
+//            try {
+//                map.insert_at_cords(new MapCoordinates(0, 0), new SandBlock());
+//            } catch (WrongCoordinatesException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//
+//        // SandBlock on top of DirtBlock
+//        try {
+//            map.insert_at_cords(new MapCoordinates(3, 2), new DirtBlock());
+//            map.insert_at_cords(new MapCoordinates(2, 2), new SandBlock());
+//            map.insert_at_cords(new MapCoordinates(1, 2), new SandBlock());
+//
+//            // SandBlock falling on a TorchBlock
+//            map.insert_at_cords(new MapCoordinates(4, 4), new TorchBlock());
+//            map.insert_at_cords(new MapCoordinates(0, 4), new SandBlock());
+//
+//            map.disply_on_out();
+//
+//            // Test 1
+//            MapCoordinates coords_of_removed_sand_block = new MapCoordinates(map.getRows()-1, 0);
+//            map.insert_at_cords(coords_of_removed_sand_block, new AirBlock());
+//            map.process_gravity(coords_of_removed_sand_block);
+//
+//            // Test 2
+//            MapCoordinates coords_of_removed_dirt_block = new MapCoordinates(3, 2);
+//            map.insert_at_cords(coords_of_removed_dirt_block, new AirBlock());
+//            map.process_gravity(coords_of_removed_dirt_block);
+//
+//            // Test 3
+//            MapCoordinates coords_of_torch_block = new MapCoordinates(4, 4);
+//            map.process_gravity(coords_of_torch_block);
+//
+//        } catch (WrongCoordinatesException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        System.out.println("\n\n\n");
+//
+//        map.display_on_out();
     }
 }
