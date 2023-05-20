@@ -1,16 +1,12 @@
-package UI;
+package UI.JavaFX.Graphical;
 
 import data.blocks.NullBlock;
-import data.blocks.SandBlock;
-import data.blocks.interfaces.SmeltableBlock;
-import data.blocks.solids.GlassBlock;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class FurnacePane extends VBox {
-    private Furnace furnace;
     private BlockPane input;
     private BlockPane output;
     private Text title;
@@ -22,8 +18,6 @@ public class FurnacePane extends VBox {
     }
 
     private void initialise() {
-        this.furnace = new Furnace();
-
         this.setAlignment(Pos.CENTER);
         this.title = new Text("Furnace");
 

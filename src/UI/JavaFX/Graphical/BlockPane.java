@@ -1,4 +1,4 @@
-package UI;
+package UI.JavaFX.Graphical;
 
 import data.blocks.AirBlock;
 import data.blocks.SandBlock;
@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-// Every block is a 50px x 50px square
+// Every BlockPane is a 50px x 50px square
 public class BlockPane extends StackPane {
     public static final int DIM_SQUARE = 50;
     private static final String FONT_NAME = "Verdana";

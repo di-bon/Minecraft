@@ -1,6 +1,5 @@
-package UI;
+package UI.logic;
 
-import data.BlockFactory;
 import data.blocks.utils.AlphabeticalBlockComparator;
 import data.blocks.utils.BlockComparator;
 import utils.BlockErrorException;
@@ -45,19 +44,6 @@ public class Inventory {
         return this.comparator;
     }
 
-//    public void display_inventory() {
-//        Iterator<Block> iterator = this.blocks.iterator();
-//        while(iterator.hasNext()) {
-//            iterator.next().display_in_inventory();
-//            System.out.print(" ");
-//        }
-//        System.out.println();
-//
-////        "Usate un Iterator per ciclare sulla collection"
-////        for(Block block : this.blocks) {
-////            block.display_in_inventory();
-////        }
-//    }
     public boolean add_block(Block block) {
         if (block.is_null_block()) {
             return false;
@@ -69,34 +55,26 @@ public class Inventory {
         }
         return false;
     }
-    public Block get_block_from_inventory(int index) throws IndexOutOfBoundsException {
-        return this.blocks.remove(index);
-//        if (this.has_index(index)) {
-//            return this.blocks.remove(index);
-//        }
-//        else {
-//            throw new IndexOutOfBoundsException();
-//        }
-    }
-    private boolean has_index(int index) {
-        return index < this.blocks.size();
-    }
 
     public void remove_block_from_inventory(int index) throws IndexOutOfBoundsException {
         this.blocks.remove(index);
     }
+
     private boolean is_smeltable(int index) throws IndexOutOfBoundsException {
         return this.blocks.get(index).is_smeltable();
     }
+
     public SmeltableBlock get_smeltable_item(int index) throws BlockErrorException {
         if (this.is_smeltable(index)) {
             return (SmeltableBlock) this.blocks.get(index);
         }
         throw new BlockErrorException();
     }
+
     private void sort_inventory() {
         this.blocks.sort(comparator);
     }
+
     public void toggle_comparator() {
         if (this.comparator instanceof AlphabeticalBlockComparator) {
             this.comparator = new BlockComparator();

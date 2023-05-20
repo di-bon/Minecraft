@@ -1,18 +1,14 @@
-package UI.TextControllers;
+package UI.Terminal.TextControllers;
 
-import UI.Inventory;
-import UI.TextPrinters.InventoryPrinter;
-import UI.TextPrinters.TextPrinter;
+import UI.logic.Inventory;
+import UI.Terminal.TextPrinters.InventoryPrinter;
 
 public class InventoryController extends AbstractTextController {
     private Inventory inventory;
 
-    public InventoryController(Inventory inventory) {
+    public InventoryController(Inventory inventory, InventoryPrinter inventoryPrinter) {
         this.inventory = inventory;
-        this.textPrinter = new InventoryPrinter(
-                this.inventory.get_blocks(),
-                this.inventory.get_comparator()
-        );
+        this.textPrinter = inventoryPrinter;
     }
 
     @Override

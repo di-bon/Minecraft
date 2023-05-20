@@ -1,8 +1,8 @@
-package UI.SimpleControllers;
+package UI.JavaFX.Controllers;
 
-import UI.BlockPane;
-import UI.Furnace;
-import UI.FurnacePane;
+import UI.JavaFX.Graphical.BlockPane;
+import UI.logic.Furnace;
+import UI.JavaFX.Graphical.FurnacePane;
 
 public class FurnaceSimpleController implements SimpleController {
     private Furnace furnace;

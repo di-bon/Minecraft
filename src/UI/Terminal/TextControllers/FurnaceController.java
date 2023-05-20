@@ -1,17 +1,14 @@
-package UI.TextControllers;
+package UI.Terminal.TextControllers;
 
-import UI.Furnace;
-import UI.TextPrinters.FurnacePrinter;
+import UI.logic.Furnace;
+import UI.Terminal.TextPrinters.FurnacePrinter;
 
 public class FurnaceController extends AbstractTextController {
     private Furnace furnace;
 
-    public FurnaceController(Furnace furnace) {
+    public FurnaceController(Furnace furnace, FurnacePrinter furnacePrinter) {
         this.furnace = furnace;
-        this.textPrinter = new FurnacePrinter(
-                this.furnace.view_input_block(),
-                this.furnace.view_output_block()
-        );
+        this.textPrinter = furnacePrinter;
     }
 
     @Override

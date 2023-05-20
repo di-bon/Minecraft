@@ -1,6 +1,6 @@
-package UI;
+package UI.JavaFX.Graphical;
 
-import UI.SimpleControllers.MainSimpleController;
+import UI.JavaFX.Controllers.MainSimpleController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

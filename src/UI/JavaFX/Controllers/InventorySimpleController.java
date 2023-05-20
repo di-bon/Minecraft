@@ -1,7 +1,7 @@
-package UI.SimpleControllers;
+package UI.JavaFX.Controllers;
 
-import UI.Inventory;
-import UI.InventoryPane;
+import UI.logic.Inventory;
+import UI.JavaFX.Graphical.InventoryPane;
 
 public class InventorySimpleController implements SimpleController {
     private Inventory inventory;

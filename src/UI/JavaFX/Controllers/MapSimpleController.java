@@ -1,6 +1,8 @@
-package UI.SimpleControllers;
+package UI.JavaFX.Controllers;
 
-import UI.*;
+import UI.JavaFX.Graphical.BlockPane;
+import UI.JavaFX.Graphical.MapPane;
+import UI.logic.Map;
 import data.blocks.interfaces.Block;
 import utils.MapCoordinates;
 import utils.WrongCoordinatesException;

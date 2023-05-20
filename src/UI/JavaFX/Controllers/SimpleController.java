@@ -1,4 +1,4 @@
-package UI.SimpleControllers;
+package UI.JavaFX.Controllers;
 
 public interface SimpleController {
     void redraw();

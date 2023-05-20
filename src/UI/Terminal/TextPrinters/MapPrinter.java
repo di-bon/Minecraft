@@ -1,4 +1,4 @@
-package UI.TextPrinters;
+package UI.Terminal.TextPrinters;
 
 import data.blocks.interfaces.Block;
 import utils.MapCoordinates;

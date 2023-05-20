@@ -1,16 +1,15 @@
-package UI.TextControllers;
+package UI.Terminal.TextControllers;
 
-import UI.Map;
-import UI.TextPrinters.MapPrinter;
-import UI.TextPrinters.TextPrinter;
+import UI.logic.Map;
+import UI.Terminal.TextPrinters.MapPrinter;
 
 public class MapController extends AbstractTextController {
     private Map map;
 
-    public MapController(Map map) {
+    public MapController(Map map, MapPrinter mapPrinter) {
         super();
         this.map = map;
-        this.textPrinter = new MapPrinter(this.map.getMap());
+        this.textPrinter = mapPrinter;
     }
 
     @Override

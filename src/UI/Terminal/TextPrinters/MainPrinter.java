@@ -1,4 +1,4 @@
-package UI.TextPrinters;
+package UI.Terminal.TextPrinters;
 
 import java.util.ArrayList;
 import java.util.List;

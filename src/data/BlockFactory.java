@@ -39,29 +39,28 @@ public class BlockFactory {
     public NullBlock null_block(){
         return new NullBlock();
     }
+
     public DirtBlock dirt_block(){
         return new DirtBlock();
     }
+
     public RawIronBlock raw_iron_block(){
     return new RawIronBlock();
 }
+
     public TorchBlock torch_block() {
         return new TorchBlock();
     }
+
     public AirBlock air_block(){
         return new AirBlock();
     }
+
     public SandBlock sand_block(){
         return new SandBlock();
     }
+
     public WaterBlock water_block(){
         return new WaterBlock();
-    }
-
-
-
-
-    public Block default_block() {
-        return this.air_block();
     }
 }

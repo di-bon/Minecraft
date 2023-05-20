@@ -1,7 +1,7 @@
-package UI.SimpleControllers;
+package UI.JavaFX.Controllers;
 
-import UI.MainGUI;
-import UI.MainView;
+import UI.JavaFX.Graphical.MainGUI;
+import UI.logic.MainView;
 import utils.BlockErrorException;
 import utils.MapCoordinates;
 import utils.WrongCoordinatesException;
@@ -26,19 +26,24 @@ public class MainSimpleController implements SimpleController {
                 this.mainView.get_map(),
                 this.mainGUI.get_map_pane()
         );
-        this.controllers_list.add(this.mapSimpleController);
 
         this.furnaceSimpleController = new FurnaceSimpleController(
                 this.mainView.get_furnace(),
                 this.mainGUI.get_furnace_pane()
         );
-        this.controllers_list.add(this.furnaceSimpleController);
 
         this.inventorySimpleController = new InventorySimpleController(
                 this.mainView.get_inventory(),
                 this.mainGUI.get_inventory_pane()
         );
-        this.controllers_list.add(this.inventorySimpleController);
+
+        this.controllers_list.addAll(
+                List.of(
+                    this.mapSimpleController,
+                    this.furnaceSimpleController,
+                    this.inventorySimpleController
+                )
+        );
 
         this.redraw();
     }

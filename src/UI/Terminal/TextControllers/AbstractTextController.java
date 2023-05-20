@@ -1,6 +1,6 @@
-package UI.TextControllers;
+package UI.Terminal.TextControllers;
 
-import UI.TextPrinters.TextPrinter;
+import UI.Terminal.TextPrinters.TextPrinter;
 
 public abstract class AbstractTextController {
     protected TextPrinter textPrinter;
@@ -15,6 +15,4 @@ public abstract class AbstractTextController {
         this.updatePrinter();
         this.textPrinter.display_on_out();
     }
-
-
 }

@@ -1,6 +1,6 @@
-package UI;
+package UI.JavaFX.Graphical;
 
-import UI.SimpleControllers.MainSimpleController;
+import UI.JavaFX.Controllers.MainSimpleController;
 import javafx.scene.layout.*;
 import utils.MapCoordinates;
 
@@ -38,21 +38,12 @@ public class MainGUI extends BorderPane {
         this.buttonListPane.setPrefWidth(150);
         this.setLeft(this.buttonListPane);
 
-        // debug
-//        ((Pane)this.getLeft()).setBackground(new Background(new BackgroundFill(new Color(1, 0, 0, 1), new CornerRadii(0), new Insets(0))));
-
         this.mapPane.setPrefWidth(MapCoordinates.DIMENSION_COLUMNS * BlockPane.DIM_SQUARE);
         this.mapPane.setPrefHeight(MapCoordinates.DIMENSION_ROWS * BlockPane.DIM_SQUARE);
         this.setCenter(this.mapPane);
 
-        // debug
-//        ((Pane)this.getCenter()).setBackground(new Background(new BackgroundFill(new Color(0, 1, 0, 1), new CornerRadii(0), new Insets(0))));
-
         this.furnacePane.setPrefWidth(150);
         this.setRight(this.furnacePane);
-
-        // debug
-//        ((Pane)this.getRight()).setBackground(new Background(new BackgroundFill(new Color(1, 0, 0, 1), new CornerRadii(0), new Insets(0))));
 
         this.inventoryPane.setPrefHeight(100);
         this.setBottom(this.inventoryPane);

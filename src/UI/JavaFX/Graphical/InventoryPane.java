@@ -1,4 +1,4 @@
-package UI;
+package UI.JavaFX.Graphical;
 
 import data.blocks.interfaces.Block;
 import javafx.geometry.Pos;
@@ -31,15 +31,4 @@ public class InventoryPane extends VBox {
             this.hBox.getChildren().add(new BlockPane(blocks_iterator.next()));
         }
     }
-
-    public void add_block(Block block) {
-        this.add_block_pane(new BlockPane((block)));
-    }
-
-    private void add_block_pane(BlockPane blockPane) {
-        this.hBox.getChildren().add(blockPane);
-    }
-//    private void add_block_panes(List<BlockPane> blockPaneList) {
-//         this.hBox.getChildren().addAll(blockPaneList);
-//    }
 }
