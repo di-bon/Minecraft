@@ -2,9 +2,8 @@ package UI.JavaFX.Graphical;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import utils.MapCoordinates;
 import utils.WrongCoordinatesException;
 
@@ -18,6 +17,7 @@ public class MapPane extends GridPane {
     }
 
     private void initialise() {
+        this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         this.setAlignment(Pos.CENTER);
         for (int column = 0; column < this.NUMBER_OF_COLUMNS; column++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();

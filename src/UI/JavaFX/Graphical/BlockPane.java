@@ -1,13 +1,16 @@
 package UI.JavaFX.Graphical;
 
 import data.blocks.AirBlock;
+import data.blocks.NullBlock;
 import data.blocks.SandBlock;
 import data.blocks.WaterBlock;
 import data.blocks.interfaces.Block;
 import data.blocks.solids.*;
 
 // JavaFX
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -24,8 +27,7 @@ public class BlockPane extends StackPane {
     private static final Color FONT_FILL = Color.BLACK;
     private static final Color FONT_BORDER = Color.BLACK;
     private Block block;
-    private Rectangle rectangle;
-    private Text text;
+//    private Text text;
 
     public BlockPane(Block block) {
         super();
@@ -35,40 +37,60 @@ public class BlockPane extends StackPane {
 
     private void initialise() {
         this.getChildren().clear();
-        rectangle = new Rectangle(BlockPane.DIM_SQUARE, BlockPane.DIM_SQUARE);
-        rectangle.setFill(this.get_block_color(this.block));
-        text = new Text(block.get_blockname());
-        text.setFont(new Font(BlockPane.FONT_SIZE));
-        this.text.maxWidth(BlockPane.DIM_SQUARE);
-        this.getChildren().addAll(rectangle, text);
+
+        ImageView image = new ImageView(
+                new Image(
+                    BlockPane.get_block_texture_name(this.block),
+                    BlockPane.DIM_SQUARE,
+                    BlockPane.DIM_SQUARE,
+                    false,
+                    false
+                )
+        );
+
+//      debug
+//        this.text = new Text(block.get_blockname());
+//        this.text.setFont(new Font(8));
+//        this.getChildren().add(this.text);
+
+        this.getChildren().add(image);
     }
 
-    private static Color get_block_color(Block block) {
+    private static String get_block_texture_name(Block block) {
+        String texture = "UI/JavaFX/Graphical/block_textures/";
         if (block instanceof DirtBlock) {
-            return Color.BROWN;
+            texture += "dirt_block";
         }
-        if (block instanceof GlassBlock) {
-            return new Color(0.8,0.8,0.8, 0.25);
+        else if (block instanceof GlassBlock) {
+            texture += "glass_block";
         }
-        if (block instanceof IronSwordBlock) {
-            return Color.GREY;
+        else if (block instanceof IronSwordBlock) {
+            texture += "iron_ingot";
         }
-        if (block instanceof RawIronBlock) {
-            return Color.DARKGRAY;
+        else if (block instanceof RawIronBlock) {
+            texture += "raw_iron_block";
         }
-        if (block instanceof TorchBlock) {
-            return Color.PURPLE;
+        else if (block instanceof TorchBlock) {
+            texture += "torch";
         }
-        if (block instanceof AirBlock) {
-            return Color.LIGHTBLUE;
+        else if (block instanceof AirBlock) {
+            texture += "air_block";
         }
-        if (block instanceof SandBlock) {
-            return Color.SANDYBROWN;
+        else if (block instanceof SandBlock) {
+            texture += "sand_block";
         }
-        if (block instanceof WaterBlock) {
-            return Color.CYAN;
+        else if (block instanceof WaterBlock) {
+            texture += "water";
         }
-        return Color.WHITE;
+        else if (block instanceof NullBlock) {
+            texture += "null_block";
+        }
+        else {
+            texture += "missing_block";
+        }
+        texture += "_texture.png";
+
+        return texture;
     }
 
     public void change_block(Block block) {

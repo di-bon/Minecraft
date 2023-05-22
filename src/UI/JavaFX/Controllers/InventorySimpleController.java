@@ -15,6 +15,6 @@ public class InventorySimpleController implements SimpleController {
 
     @Override
     public void redraw() {
-        this.inventoryPane.set_blocks(inventory.get_blocks_iterator());
+        this.inventoryPane.set_blocks(this.inventory.get_blocks_iterator());
     }
 }
