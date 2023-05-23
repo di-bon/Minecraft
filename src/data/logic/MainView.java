@@ -1,4 +1,4 @@
-package UI.logic;
+package data.logic;
 
 import data.blocks.NullBlock;
 import utils.BlockErrorException;
@@ -11,6 +11,7 @@ public class MainView {
     private final Map map;
     private final Furnace furnace;
     private final Inventory inventory;
+    private final float pickaxe_multiplier = 2.0f;
 
     public MainView(boolean random) {
         map = new Map(random);
@@ -53,7 +54,29 @@ public class MainView {
 
     public void pick_up_block(MapCoordinates mapCoordinates) throws BlockErrorException, WrongCoordinatesException {
         Block block = this.map.gimme_pickable(mapCoordinates);
+        block.reset_hardness();
         this.inventory.add_block(block);
+    }
+
+    public void mine_block(MapCoordinates mapCoordinates, int hardness_to_remove, boolean is_using_pickaxe) throws BlockErrorException {
+        if (is_using_pickaxe) {
+            hardness_to_remove *= this.pickaxe_multiplier;
+        }
+        if (this.map.getBlockAt(mapCoordinates).is_pickable()) {
+            this.map.mine_block(mapCoordinates, hardness_to_remove);
+        }
+    }
+
+    public boolean is_pickable(MapCoordinates mapCoordinates) {
+        return this.map.getBlockAt(mapCoordinates).is_pickable();
+    }
+
+    public int get_block_current_hardness(MapCoordinates mapCoordinates) {
+        return this.map.getBlockAt(mapCoordinates).get_current_hardness();
+    }
+
+    public void insert_block_at(Block block, MapCoordinates mapCoordinates) throws WrongCoordinatesException {
+        this.map.insert_at_cords(mapCoordinates, block);
     }
 
     public void toggle_inventory_comparator() {

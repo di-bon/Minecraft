@@ -1,4 +1,4 @@
-package UI.logic;
+package data.logic;
 
 import data.blocks.NullBlock;
 import data.blocks.interfaces.Block;

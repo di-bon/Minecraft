@@ -1,5 +1,6 @@
 package UI.JavaFX.Graphical;
 
+import UI.JavaFX.Controllers.MainSimpleController;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
@@ -10,9 +11,11 @@ import utils.WrongCoordinatesException;
 public class MapPane extends GridPane {
     private final int NUMBER_OF_ROWS = MapCoordinates.DIMENSION_ROWS;
     private final int NUMBER_OF_COLUMNS = MapCoordinates.DIMENSION_COLUMNS;
+    private final MainSimpleController mainSimpleController;
 
-    public MapPane() {
+    public MapPane(MainSimpleController mainSimpleController) {
         super();
+        this.mainSimpleController = mainSimpleController;
         this.initialise();
     }
 
@@ -47,20 +50,20 @@ public class MapPane extends GridPane {
     }
 
     // New name for 'insert_block_pane_at'
-    private void set_cell_aux(MapCoordinates block_coords, BlockPane block_to_set) throws WrongCoordinatesException {
+    private void set_cell_aux(MapCoordinates block_coords, BlockPaneExternal block_to_set) throws WrongCoordinatesException {
         if (!block_coords.is_in_bound()) {
             throw new WrongCoordinatesException();
         }
         this.add(block_to_set, block_coords.getColumn(), block_coords.getRow());
     }
 
-    public void set_cell(MapCoordinates mapCoordinates, BlockPane block_to_set) throws WrongCoordinatesException {
-        BlockPane blockPane = this.get_block_pane_at_coords(mapCoordinates);
+    public void set_cell(MapCoordinates mapCoordinates, BlockPaneExternal block_to_set) throws WrongCoordinatesException {
+        BlockPaneExternal blockPane = (BlockPaneExternal) this.get_block_pane_at_coords(mapCoordinates);
         if (blockPane != null) {
             blockPane.getChildren().clear();
             blockPane.change_block(block_to_set.get_block());
         } else {
-            blockPane = new BlockPane(block_to_set.get_block());
+            blockPane = new BlockPaneExternal(block_to_set.get_block(), mapCoordinates, this.mainSimpleController);
             this.set_cell_aux(mapCoordinates, blockPane);
         }
     }

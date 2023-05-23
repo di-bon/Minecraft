@@ -1,4 +1,4 @@
-package UI.logic;
+package data.logic;
 
 import data.blocks.utils.AlphabeticalBlockComparator;
 import data.blocks.utils.BlockComparator;

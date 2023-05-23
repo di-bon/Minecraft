@@ -14,5 +14,9 @@ public interface Block extends InventoryBlock {
     boolean is_smeltable();
 
     boolean is_null_block();
+    int get_current_hardness();
+    int get_max_hardness();
+    void reset_hardness();
+    void mine_block(int value);
 
 }

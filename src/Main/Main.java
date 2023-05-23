@@ -1,7 +1,7 @@
 package Main;
 
 import UI.Terminal.TextControllers.MainViewController;
-import UI.logic.MainView;
+import data.logic.MainView;
 import utils.BlockErrorException;
 import utils.MapCoordinates;
 import utils.WrongCoordinatesException;
@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int input;
+        int hardness_to_remove = 50;
 
         MainViewController mainViewController = new MainViewController(new MainView(true));
         mainViewController.update_and_display();
@@ -33,7 +34,7 @@ public class Main {
                         int column = scanner.nextInt();
 
                         MapCoordinates mapCoordinates = new MapCoordinates(row, column);
-                        mainViewController.pick_up_block(mapCoordinates);
+                        mainViewController.pick_up_block(mapCoordinates, hardness_to_remove);
                     } catch (NumberFormatException nfe) {
                         nfe.printStackTrace();
                     } catch (BlockErrorException bee) {

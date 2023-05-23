@@ -1,6 +1,6 @@
 package UI.Terminal.TextControllers;
 
-import UI.logic.Map;
+import data.logic.Map;
 import UI.Terminal.TextPrinters.MapPrinter;
 
 public class MapController extends AbstractTextController {

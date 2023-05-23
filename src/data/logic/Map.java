@@ -1,4 +1,4 @@
-package UI.logic;
+package data.logic;
 
 import data.BlockFactory;
 import data.blocks.AirBlock;
@@ -69,6 +69,10 @@ public class Map {
         } else {
             throw new BlockErrorException();
         }
+    }
+
+    public void mine_block(MapCoordinates mapCoordinates, int hardness_to_remove) {
+        this.getBlockAt(mapCoordinates).mine_block(hardness_to_remove);
     }
 
     // TODO: update process_gravity logic

@@ -1,6 +1,6 @@
 package UI.Terminal.TextControllers;
 
-import UI.logic.Furnace;
+import data.logic.Furnace;
 import UI.Terminal.TextPrinters.FurnacePrinter;
 
 public class FurnaceController extends AbstractTextController {

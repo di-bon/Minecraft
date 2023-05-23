@@ -9,9 +9,13 @@ public abstract class AbstractBlock implements Block {
     protected boolean falls_with_gravity;
     protected boolean fall_through;
     protected boolean pickable;
+    protected int max_hardness;
+    protected int current_hardness;
 
-    public AbstractBlock() {
+    public AbstractBlock(int hardness) {
         this.pickable = false;
+        this.max_hardness = hardness;
+        this.current_hardness = hardness;
     }
 
     @Override
@@ -66,5 +70,25 @@ public abstract class AbstractBlock implements Block {
     @Override
     public void display_in_inventory() {
         System.out.print("[" + this.content + "]");
+    }
+
+    @Override
+    public int get_current_hardness() {
+        return this.current_hardness;
+    }
+
+    @Override
+    public int get_max_hardness() {
+        return this.max_hardness;
+    }
+
+    @Override
+    public void reset_hardness() {
+        this.current_hardness = this.max_hardness;
+    }
+
+    @Override
+    public void mine_block(int value) {
+        this.current_hardness -= value;
     }
 }

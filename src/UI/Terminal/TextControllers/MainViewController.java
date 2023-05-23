@@ -1,7 +1,6 @@
 package UI.Terminal.TextControllers;
 
-import UI.JavaFX.Controllers.SimpleController;
-import UI.logic.MainView;
+import data.logic.MainView;
 import UI.Terminal.TextPrinters.FurnacePrinter;
 import UI.Terminal.TextPrinters.InventoryPrinter;
 import UI.Terminal.TextPrinters.MainPrinter;
@@ -78,7 +77,7 @@ public class MainViewController extends AbstractTextController {
         this.furnaceController.update_and_display();
     }
 
-    public void pick_up_block(MapCoordinates mapCoordinates) throws BlockErrorException, WrongCoordinatesException {
+    public void pick_up_block(MapCoordinates mapCoordinates, int hardness_to_remove) throws BlockErrorException, WrongCoordinatesException {
         this.mainView.pick_up_block(mapCoordinates);
         this.mapController.update_and_display();
         this.inventoryController.update_and_display();

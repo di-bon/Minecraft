@@ -1,11 +1,11 @@
 package UI.JavaFX.Controllers;
 
-import UI.logic.Inventory;
+import data.logic.Inventory;
 import UI.JavaFX.Graphical.InventoryPane;
 
 public class InventorySimpleController implements SimpleController {
-    private Inventory inventory;
-    private InventoryPane inventoryPane;
+    private final Inventory inventory;
+    private final InventoryPane inventoryPane;
 
     public InventorySimpleController(Inventory inventory, InventoryPane inventoryPane) {
         this.inventory = inventory;

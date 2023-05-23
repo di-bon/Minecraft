@@ -1,19 +1,21 @@
 package UI.JavaFX.Controllers;
 
-import UI.JavaFX.Graphical.BlockPane;
+import UI.JavaFX.Graphical.BlockPaneExternal;
 import UI.JavaFX.Graphical.MapPane;
-import UI.logic.Map;
+import data.logic.Map;
 import data.blocks.interfaces.Block;
 import utils.MapCoordinates;
 import utils.WrongCoordinatesException;
 
 public class MapSimpleController implements SimpleController {
-    private Map map;
-    private MapPane mapPane;
+    private final Map map;
+    private final MapPane mapPane;
+    private final MainSimpleController mainSimpleController;
 
-    public MapSimpleController(Map map, MapPane mapPane) {
+    public MapSimpleController(Map map, MapPane mapPane, MainSimpleController mainSimpleController) {
         this.map = map;
         this.mapPane = mapPane;
+        this.mainSimpleController = mainSimpleController;
         this.redraw();
     }
 
@@ -25,7 +27,7 @@ public class MapSimpleController implements SimpleController {
                 try {
                     MapCoordinates mapCoordinates = new MapCoordinates(row, column);
                     Block block_to_set = this.map.getBlockAt(mapCoordinates);
-                    this.mapPane.set_cell(mapCoordinates, new BlockPane(block_to_set));
+                    this.mapPane.set_cell(mapCoordinates, new BlockPaneExternal(block_to_set, mapCoordinates, this.mainSimpleController));
                 } catch (WrongCoordinatesException wce) {
                     wce.printStackTrace();
                 }

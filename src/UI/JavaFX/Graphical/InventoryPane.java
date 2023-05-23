@@ -1,5 +1,6 @@
 package UI.JavaFX.Graphical;
 
+import UI.JavaFX.Controllers.MainSimpleController;
 import data.blocks.interfaces.Block;
 import data.blocks.solids.DirtBlock;
 import javafx.geometry.Pos;
@@ -12,9 +13,11 @@ import java.util.Iterator;
 public class InventoryPane extends VBox {
     private Text text;
     private HBox hBox;
+    private final MainSimpleController mainSimpleController;
 
-    public InventoryPane() {
+    public InventoryPane(MainSimpleController mainSimpleController) {
         super();
+        this.mainSimpleController = mainSimpleController;
         this.initialise();
     }
 
@@ -29,8 +32,14 @@ public class InventoryPane extends VBox {
 
     public void set_blocks(Iterator<Block> blocks_iterator) {
         this.hBox.getChildren().clear();
+        int index = 0;
         while (blocks_iterator.hasNext()) {
-            this.hBox.getChildren().add(new BlockPane(blocks_iterator.next()));
+            this.hBox.getChildren().add(
+                new BlockPaneAnonymous(blocks_iterator.next(),
+                        this.mainSimpleController,
+                        index++
+                )
+            );
         }
     }
 }

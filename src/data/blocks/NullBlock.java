@@ -6,7 +6,7 @@ import data.blocks.solids.AbstractSolidBlock;
 
 public class NullBlock extends AbstractSolidBlock implements SmeltableBlock {
     public NullBlock() {
-        super();
+        super(1);
         this.blockname = "NullBlock";
         this.content = 'N';
         this.pickable = false;

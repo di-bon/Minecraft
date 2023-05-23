@@ -2,12 +2,10 @@ package Main;
 
 import UI.JavaFX.Graphical.MainGUI;
 import UI.JavaFX.Controllers.MainSimpleController;
-import UI.logic.MainView;
+import data.logic.MainView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 public class MainFX extends Application {
     @Override

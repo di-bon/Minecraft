@@ -1,6 +1,6 @@
 package UI.Terminal.TextControllers;
 
-import UI.logic.Inventory;
+import data.logic.Inventory;
 import UI.Terminal.TextPrinters.InventoryPrinter;
 
 public class InventoryController extends AbstractTextController {

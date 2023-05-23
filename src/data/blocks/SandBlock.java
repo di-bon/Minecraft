@@ -6,7 +6,7 @@ import data.blocks.solids.GlassBlock;
 
 public class SandBlock extends AbstractBlock implements SmeltableBlock {
     public SandBlock() {
-        super();
+        super(50);
         this.blockname = "SandBlock";
         this.content = 'S';
         this.falls_with_gravity = true;
