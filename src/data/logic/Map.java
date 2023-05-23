@@ -22,11 +22,12 @@ public class Map {
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < columns; column++) {
                 MapCoordinates mapCoordinates = new MapCoordinates(row, column);
-                try {
-                    this.insert_at_cords(mapCoordinates, new AirBlock());
-                } catch (WrongCoordinatesException e) {
-                    throw new RuntimeException(e);
-                }
+                this.map[mapCoordinates.getRow()][mapCoordinates.getColumn()] = new AirBlock();
+//                try {
+//                    this.insert_at_cords(mapCoordinates, new AirBlock());
+//                } catch (WrongCoordinatesException e) {
+//                    throw new RuntimeException(e);
+//                }
             }
         }
         this.addSea(3);
@@ -75,17 +76,6 @@ public class Map {
         this.getBlockAt(mapCoordinates).mine_block(hardness_to_remove);
     }
 
-    // TODO: update process_gravity logic
-    public void process_gravity(MapCoordinates coords_start) throws WrongCoordinatesException {
-        int currentRow = coords_start.getRow();
-
-        while (currentRow >= 1) {
-            MapCoordinates upper_block_coords = new MapCoordinates(currentRow, coords_start.getColumn());
-            process_block_gravity(upper_block_coords);
-            currentRow--;
-        }
-    }
-
     private boolean is_in_bounds(MapCoordinates mapCoordinates) {
         int row = mapCoordinates.getRow();
         int column = mapCoordinates.getColumn();
@@ -93,14 +83,14 @@ public class Map {
         return (0 <= row && row < this.getRows() && (0 <= column && column < this.getColumns()));
     }
 
-    private void swap(MapCoordinates mapCoordinates) {
-        if (mapCoordinates.getRow() == this.getRows() - 1) {
+    private void swap(MapCoordinates upper_block) {
+        if (upper_block.getRow() == this.getRows() - 1) {
             return;
         }
 
-        Block tmp = map[mapCoordinates.getRow()+1][mapCoordinates.getColumn()];
-        map[mapCoordinates.getRow()+1][mapCoordinates.getColumn()] = map[mapCoordinates.getRow()][mapCoordinates.getColumn()];
-        map[mapCoordinates.getRow()][mapCoordinates.getColumn()] = tmp;
+        Block tmp = map[upper_block.getRow()+1][upper_block.getColumn()];
+        map[upper_block.getRow()+1][upper_block.getColumn()] = map[upper_block.getRow()][upper_block.getColumn()];
+        map[upper_block.getRow()][upper_block.getColumn()] = tmp;
     }
 
     public void insert_at_cords(MapCoordinates mapCoordinates, Block block) throws WrongCoordinatesException {
@@ -112,40 +102,67 @@ public class Map {
         int column = mapCoordinates.getColumn();
 
         this.map[row][column] = block;
-        if (this.map[row][column].is_falls_with_gravity()) {
-            process_block_gravity(mapCoordinates);
+
+        this.process_column_gravity(mapCoordinates.getColumn());
+    }
+
+    public void process_map_gravity() throws WrongCoordinatesException {
+        for (int column = 0; column < MapCoordinates.DIMENSION_COLUMNS; column++) {
+            this.process_column_gravity(column);
         }
     }
 
-    // TODO: update proscess_gravity_block logic
-    private void process_block_gravity(MapCoordinates mapCoordinates) throws WrongCoordinatesException {
-        int row = mapCoordinates.getRow();
-        int column = mapCoordinates.getColumn();
+    public void process_column_gravity(int column) throws WrongCoordinatesException {
+        for (int row = MapCoordinates.DIMENSION_ROWS - 1; row >= 0; row--) {
+            MapCoordinates block_coords = new MapCoordinates(row, column);
+            this.process_block_gravity(block_coords);
+        }
+    }
 
-        if (row == this.getRows() - 1) return;
+    private void process_block_gravity(MapCoordinates falling_block_coords) throws WrongCoordinatesException {
+//        System.out.println("Falling block is at " + falling_block_coords);
 
-        for (int row_tmp = row; row_tmp < this.getRows() - 1; row_tmp++) {
-            if (destroy_on_torch(new MapCoordinates(row + 1, column))) {
-                System.out.println("Destroying a block");
-                this.insert_at_cords(mapCoordinates, new AirBlock());
+        // this.getBlockAt checks if coords are valid, otherwise it throws a new WrongCoordinateException
+        Block falling_block = this.getBlockAt(falling_block_coords);
+
+        // if the block doesn't fall when there is nothing underneath it
+        if (!falling_block.is_falls_with_gravity()) {
+//            System.out.println("process_block_gravity finished: falling_block.is_falls_with_gravity is false");
+            return;
+        }
+
+        // if the block is on the last row
+        if (falling_block_coords.getRow() == MapCoordinates.DIMENSION_ROWS - 1) {
+//            System.out.println("process_block_gravity finished: falling_block_coords.getRow() == MapCoordinates.DIMENSION_ROWS - 1");
+            return;
+        }
+
+        for (int row = falling_block_coords.getRow(); row < MapCoordinates.DIMENSION_ROWS - 1; row++) {
+            MapCoordinates underneath_block_coords = new MapCoordinates(
+                row + 1,
+                falling_block_coords.getColumn()
+            );
+            // destroy the falling block if it is going to land on a torch
+            if (destroy_on_torch(underneath_block_coords)) {
+//                System.out.println("process_block_gravity finished: destroy_on_torch is true");
+                this.insert_at_cords(falling_block_coords, new AirBlock());
                 return;
             }
-
-            if (!map[row_tmp + 1][column].is_fall_through()) {
-                break;
+            // check if the block can still fall
+            if (!this.getBlockAt(underneath_block_coords).is_fall_through()) {
+//                System.out.println("process_block_gravity finished: underneath block is not fall through. coords: " + underneath_block_coords);
+                return;
             }
-
-            swap(new MapCoordinates(row_tmp, column));
+//            System.out.println("Swapping blocks. upper: " + falling_block_coords);
+            this.swap(falling_block_coords);
+            falling_block_coords = underneath_block_coords;
         }
     }
 
     // destroy_on_torch return true if any falling block falls on a torch
-    private boolean destroy_on_torch(MapCoordinates falling_block) {
-        Block lower_block = this.getBlockAt(new MapCoordinates(falling_block.getRow() + 1, falling_block.getColumn()));
-        if (lower_block instanceof TorchBlock) {
-            return true;
-        }
-        return false;
+    private boolean destroy_on_torch(MapCoordinates check_if_this_is_torch) {
+        Block lower_block = this.getBlockAt(new MapCoordinates(check_if_this_is_torch.getRow() + 1, check_if_this_is_torch.getColumn()));
+        return lower_block instanceof TorchBlock;
     }
 
     private void addRowsOfWater() {

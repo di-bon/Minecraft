@@ -24,9 +24,13 @@ public class Furnace {
         this.input = new NullBlock();
         this.output = new NullBlock();
     }
-    public void setInput(SmeltableBlock smeltableBlock) {
-        this.input = smeltableBlock;
-        this.output = this.input.smelt();
+    public boolean setInput(SmeltableBlock smeltableBlock) {
+        if (this.input.is_null_block()) {
+            this.input = smeltableBlock;
+            this.output = this.input.smelt();
+            return true;
+        }
+        return false;
     }
     public SmeltableBlock get_input() {
         SmeltableBlock previous_input = this.input;

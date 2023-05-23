@@ -31,10 +31,13 @@ public class MainView {
         return inventory;
     }
 
-    public void move_into_furnace_from_inventory(int index) throws BlockErrorException {
+    public boolean move_into_furnace_from_inventory(int index) throws BlockErrorException {
         SmeltableBlock smeltableBlock = this.inventory.get_smeltable_item(index);
-        this.furnace.setInput(smeltableBlock);
-        this.inventory.remove_block_from_inventory(index);
+        boolean did_move_into_furnace = this.furnace.setInput(smeltableBlock);
+        if (did_move_into_furnace) {
+            this.inventory.remove_block_from_inventory(index);
+        }
+        return did_move_into_furnace;
     }
 
     public void smelt() {
@@ -77,6 +80,10 @@ public class MainView {
 
     public void insert_block_at(Block block, MapCoordinates mapCoordinates) throws WrongCoordinatesException {
         this.map.insert_at_cords(mapCoordinates, block);
+    }
+
+    public void process_map_gravity() throws WrongCoordinatesException {
+        this.map.process_map_gravity();
     }
 
     public void toggle_inventory_comparator() {

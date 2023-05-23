@@ -92,6 +92,11 @@ public class MainGUI extends BorderPane {
                 wce.printStackTrace();
             }
         }
+        try {
+            this.mainSimpleController.process_map_gravity();
+        } catch (WrongCoordinatesException wce) {
+            wce.printStackTrace();
+        }
         this.mainSimpleController.redraw();
     }
 }

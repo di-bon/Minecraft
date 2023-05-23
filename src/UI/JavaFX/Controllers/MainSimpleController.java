@@ -74,9 +74,11 @@ public class MainSimpleController implements SimpleController {
     }
 
     public void move_into_furnace_from_inventory(int index) throws BlockErrorException {
-        this.mainView.move_into_furnace_from_inventory(index);
-        this.inventorySimpleController.redraw();
-        this.furnaceSimpleController.redraw();
+        boolean did_move_into_furnace = this.mainView.move_into_furnace_from_inventory(index);
+        if (did_move_into_furnace) {
+            this.inventorySimpleController.redraw();
+            this.furnaceSimpleController.redraw();
+        }
     }
 
     private void pick_up_block(MapCoordinates mapCoordinates) throws BlockErrorException, WrongCoordinatesException {
@@ -101,10 +103,6 @@ public class MainSimpleController implements SimpleController {
         }
     }
 
-    public int get_block_current_hardness(MapCoordinates mapCoordinates) {
-        return this.mainView.get_block_current_hardness(mapCoordinates);
-    }
-
     public void toggle_inventory_comparator() {
         this.mainView.toggle_inventory_comparator();
         this.inventorySimpleController.redraw();
@@ -117,6 +115,10 @@ public class MainSimpleController implements SimpleController {
 
     public void insert_block_at_no_redraw(Block block, MapCoordinates mapCoordinates) throws WrongCoordinatesException {
         this.mainView.insert_block_at(block, mapCoordinates);
+    }
+
+    public void process_map_gravity() throws WrongCoordinatesException {
+        this.mainView.process_map_gravity();
     }
 
     public MainGUI get_main_gui() {
